@@ -3282,6 +3282,7 @@ void gen_clist(FILE *f,type *t,const_list *cl)
       sz=zmadd(cl->idx,l2zm(1L));
     }
     if(!zmleq(t->size,sz)) gen_ds(f,zmmult(zmsub(t->size,sz),szof(t->next)),t->next);
+    gen_close_list (f);
     return;
   }
   if(ISUNION(t->flags)){

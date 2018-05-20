@@ -406,6 +406,7 @@ void init_cppm(void)
 			for (cp = upper; *cp; cp ++) cppm[s][(int)*cp] = ns;
 			for (cp = lower; *cp; cp ++) cppm[s][(int)*cp] = ns;
 			cppm[s]['_'] = ns;
+			cppm[s]['$'] = ns;
 			break;
 		case NUM:
 			for (j = '0'; j <= '9'; j ++) cppm[s][j] = ns;

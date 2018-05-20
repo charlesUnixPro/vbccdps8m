@@ -637,7 +637,11 @@ extern void move_IC(IC *,IC *);
 extern void pric(FILE *,IC *);
 extern void pric2(FILE *,IC *);
 extern void probj(FILE *,obj *,int);
-extern void emit(FILE *,const char *,...);
+extern void emit(FILE *,const char *,...)
+#ifdef __GNUC__
+  __attribute__ ((format (printf, 2, 3)))
+#endif
+;
 extern void emit_char(FILE *,int);
 void emit_flush(FILE *);
 void remove_asm(void);
@@ -726,6 +730,7 @@ extern void init_db(FILE *);
 void cleanup_db(FILE *);
 extern int dangerous_IC(IC *);
 extern void gen_dc(FILE *,int,const_list *);
+extern void close_list(FILE *);
 extern void gen_ds(FILE *,zmax,type *);
 extern void gen_var_head(FILE *,Var *);
 extern void gen_align(FILE *,zmax);

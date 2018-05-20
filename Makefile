@@ -1,6 +1,25 @@
+TARGET?=dps8m
 
 # used to create vbcc, vc and ucpp
-CC = gcc -std=c9x -g -DHAVE_AOS4 #-DHAVE_ECPP -DHAVE_MISRA
+CC = gcc -std=c9x -g -O0 # -DHAVE_AOS4 #-DHAVE_ECPP -DHAVE_MISRA
+CC +=  -U__STRICT_ANSI__ -D_GNU_SOURCE -Wall -Wno-conversion \
+  -Wunused-function \
+  -Wunused-label \
+  -Wunused-value \
+  -Wunused \
+  -Wextra \
+  -Wno-array-bounds \
+  -Wconversion \
+  -Wno-sign-compare \
+  -Wno-sign-conversion \
+  -Wno-conversion \
+  -Wno-parentheses \
+  -Wno-unused-variable \
+  -Wno-unused-parameter 
+#  -Wmissing-prototypes 
+# -Wunused-variable 
+#-Wsign-conversion 
+
 LDFLAGS = -lm
 
 # native version; used to create dtgen
@@ -142,6 +161,23 @@ vscobjects = $(TRGDIR)/vsc.o $(TRGDIR)/schedule.o
 
 bin/vbcc$(TARGET): $(fobjects)
 	$(CC) $(LDFLAGS) $(fobjects) -o bin/vbcc$(TARGET)
+
+clean :
+	$(RM) $(fobjects)
+
+srcs = opt.c av.c rd.c regs.c flow.c cse.c cp.c loop.c alias.c \
+       main.c vars.c declaration.c \
+       parse_expr.c type_expr.c ic.c \
+       $(TRGDIR)/machine.c statements.c \
+       supp.c $(TRGDIR)/dt.c \
+       ucpp/assert.c ucpp/cpp.c ucpp/hash.c \
+       ucpp/lexer.c ucpp/macro.c ucpp/mem.c \
+       ucpp/eval.c \
+       opt.h supp.h $(TRGDIR)/machine.h $(TRGDIR)/dt.h vbc.h vbcc_cpp.h errors.h \
+       ucpp/cpp.h ucpp/mem.h ucpp/hash.h ucpp/tune.h 
+
+tags: $(srcs)
+	ctags $(srcs)
 
 bin/vbccs$(TARGET): $(sobjects)
 	$(CC) $(LDFLAGS) $(sobjects) -o bin/vbccs$(TARGET)

@@ -111,6 +111,7 @@ char *yndefault(char *spec,int yn)
 #if __STDC_VERSION__==199901L
     TESTTYPE(unsigned long long,123,123);
 #endif
+    TESTTYPE(unsigned __int128,123,123);
     return none;
   }
   if(issigned){
@@ -121,6 +122,7 @@ char *yndefault(char *spec,int yn)
 #if __STDC_VERSION__==199901L
     TESTTYPE(signed long long,123,123);
 #endif
+    TESTTYPE(signed __int128,123,123);
     return none;
   }
   return none;
